@@ -1,6 +1,7 @@
 package jpcap.api;
 
 import jpcap.JpcapCaptor;
+import jpcap.PackagePrinter;
 import jpcap.PacketReceiver;
 import jpcap.packet.Packet;
 
@@ -76,14 +77,36 @@ public class Capture implements AutoCloseable {
 
     public static void main(String... args) throws Exception {
 
-        try (Capture c = Capture.fromFile("")) {
-            c.addHandler(new PacketHandler() {
-                @Override
-                public void handle(Packet packet) {
-                    System.out.println(packet);
-                }
-            });
-            c.start();
+        initSniffer();
+//        try (Capture c = Capture.fromFile("")) {
+//            c.addHandler(new PacketHandler() {
+//                @Override
+//                public void handle(Packet packet) {
+//                    System.out.println(packet);
+//                }
+//            });
+//            c.start();
+//        }
+
+    }
+
+    public static void initSniffer(){
+        jpcap.NetworkInterface[] devices = JpcapCaptor.getDeviceList();
+
+        for (int i = 0; i < devices.length ; i++) {
+            System.out.println(devices[i].name  + " " + devices[i].description);
+
+        }
+        try {
+            JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000);
+
+            while (true){
+                captor.processPacket(10, new PackagePrinter());
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }

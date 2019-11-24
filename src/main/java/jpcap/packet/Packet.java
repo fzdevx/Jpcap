@@ -2,6 +2,8 @@ package jpcap.packet;
 
 import jpcap.JpcapCaptor;
 
+import java.util.Arrays;
+
 /**
  * This is a root class of the all the packets captured by {@link JpcapCaptor Jpcap}.
  */
@@ -73,7 +75,20 @@ public class Packet implements java.io.Serializable {
      *
      * @return a string representation of this packet
      */
+//    public String toString() {
+//        return sec + ":" + usec;
+//    }
+
+    @Override
     public String toString() {
-        return sec + ":" + usec;
+        return "Packet{" +
+                "sec=" + sec +
+                ", usec=" + usec +
+                ", caplen=" + caplen +
+                ", len=" + len +
+                ", datalink=" + datalink +
+                ", header=" + Arrays.toString(header) +
+                ", data=" + Arrays.toString(data) +
+                '}';
     }
 }
