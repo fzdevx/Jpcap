@@ -81,14 +81,16 @@ public class Packet implements java.io.Serializable {
 
     @Override
     public String toString() {
+        String s = new String(header);
+        System.out.println(s);
         return "Packet{" +
-                "sec=" + sec +
-                ", usec=" + usec +
-                ", caplen=" + caplen +
-                ", len=" + len +
-                ", datalink=" + datalink +
-                ", header=" + Arrays.toString(header) +
-                ", data=" + Arrays.toString(data) +
+                "sec=" + sec + "\n"+
+                "usec=" + usec + "\n"+
+                "caplen=" + caplen + "\n"+
+                "len=" + len + "\n"+
+                "datalink=" + datalink + "\n"+
+                "header=" + Arrays.toString(header) + "\n"+
+                "data=" + Arrays.toString(data) +
                 '}';
     }
 }
