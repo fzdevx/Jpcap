@@ -91,18 +91,24 @@ public class Capture implements AutoCloseable {
     }
 
     public static void initSniffer(){
+        //Pega as interfaces de rede
         jpcap.NetworkInterface[] devices = JpcapCaptor.getDeviceList();
 
+        //Printa as interfaces
         for (int i = 0; i < devices.length ; i++) {
             System.out.println(devices[i].name  + " " + devices[i].description);
 
         }
+
         try {
+            //usa a primeira interface para fazer a captura dos pacotes
             JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000);
 
             while (true){
                 captor.processPacket(10, new PackagePrinter());
             }
+            
+            //captor.close();
 
 
         }catch (Exception e){
