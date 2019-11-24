@@ -11,6 +11,7 @@ class SendICMP
 		NetworkInterface[] devices = JpcapCaptor.getDeviceList();
 		if(args.length<1){
 			System.out.println("Usage: java SentICMP <device index (e.g., 0, 1..)>");
+            System.out.println("TESTE ICMP");
 			for(int i=0;i<devices.length;i++)
 				System.out.println(i+":"+devices[i].name+"("+devices[i].description+")");
 			System.exit(0);
