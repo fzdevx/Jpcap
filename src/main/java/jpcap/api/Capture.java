@@ -68,7 +68,7 @@ public class Capture implements AutoCloseable {
     public static Capture fromInterface(NetworkInterface iface) {
         JpcapCaptor captor = null;
         try {
-            captor = JpcapCaptor.openDevice(null, Integer.MAX_VALUE, true, 1000);
+            captor = JpcapCaptor.openDevice(null, Integer.MAX_VALUE, true, 1000, true);
         } catch (IOException e) {
             throw new CaptureException(e);
         }
@@ -102,7 +102,7 @@ public class Capture implements AutoCloseable {
 
         try {
             //usa a primeira interface para fazer a captura dos pacotes
-            JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000);
+            JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000, true);
             //captor.setFilter("ftp",false);
             while (true){
                 captor.processPacket(10, new PackagePrinter());

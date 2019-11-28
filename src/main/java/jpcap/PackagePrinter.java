@@ -1,5 +1,6 @@
 package jpcap;
 
+import jpcap.api.Capture;
 import jpcap.packet.*;
 
 public class PackagePrinter implements PacketReceiver {
@@ -20,11 +21,17 @@ public class PackagePrinter implements PacketReceiver {
 //            }
 //          //  System.out.println(p.toString());
 //        }
-        if (p instanceof TCPPacket) {
-            //if (((TCPPacket) p).src_port == 20 || ((TCPPacket) p).dst_port == 21) {
-                FTPPacket p_ftp = new FTPPacket((TCPPacket) p,0);
-                System.out.println("\n" + p_ftp.toString() + "\n");
-            //}
+        if(JpcapCaptor.interpretFTP){
+            if (p instanceof TCPPacket) {
+                if (((TCPPacket) p).src_port == 20 || ((TCPPacket) p).dst_port == 21) {
+                    FTPPacket p_ftp = new FTPPacket((TCPPacket) p,0);
+                    System.out.println("\n" + p_ftp.toString() + "\n");
+                }
+            } else{
+                System.out.println("\n" + p.toString() + "\n");
+            }
+        } else{
+            System.out.println("\n" + p.toString() + "\n");
         }
     }
 }
