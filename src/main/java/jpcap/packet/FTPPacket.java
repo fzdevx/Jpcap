@@ -3,27 +3,21 @@ package jpcap.packet;
 import java.util.Arrays;
 
 public class FTPPacket extends TCPPacket {
+    private String data;
 
-    /**
-     * Creates a TCP packet.
-     *
-     * @param src_port Source port number
-     * @param dst_port Destination port number
-     * @param sequence sequence number
-     * @param ack_num  ACK number
-     * @param urg      URG flag
-     * @param ack      ACK flag
-     * @param psh      PSH flag
-     * @param rst      RST flag
-     * @param syn      SYN flag
-     * @param fin      FIN flag
-     * @param rsv1     RSV1 flag
-     * @param rsv2     RSV2 flag
-     * @param window   window size
-     * @param urgent   urgent pointer
-     */
     public FTPPacket(int src_port, int dst_port, long sequence, long ack_num, boolean urg, boolean ack, boolean psh, boolean rst, boolean syn, boolean fin, boolean rsv1, boolean rsv2, int window, int urgent) {
         super(src_port, dst_port, sequence, ack_num, urg, ack, psh, rst, syn, fin, rsv1, rsv2, window, urgent);
+    }
+
+    public FTPPacket(TCPPacket p, int urgent){
+        super(p.src_port, p.dst_port, p.sequence, p.ack_num, p.urg, p.ack, p.psh, p.rst, p.syn, p.fin, p.rsv1, p.rsv2, p.window, urgent);
+        this.data = byteArrayToString(p.data);
+
+    }
+
+    private String byteArrayToString(byte[] data){
+        String strData = new String(data);
+        return strData;
     }
 
     @Override
@@ -69,7 +63,7 @@ public class FTPPacket extends TCPPacket {
                 "len=" + len + "\n" +
                 "datalink=" + datalink + "\n" +
                 "header=" + Arrays.toString(header) + "\n" +
-                "data=" + Arrays.toString(data) + "\n" +
+                "data=" + data + "\n" +
                 '}';
     }
 }

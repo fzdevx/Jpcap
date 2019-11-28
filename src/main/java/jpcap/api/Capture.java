@@ -103,7 +103,7 @@ public class Capture implements AutoCloseable {
         try {
             //usa a primeira interface para fazer a captura dos pacotes
             JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000);
-
+            //captor.setFilter("ftp",false);
             while (true){
                 captor.processPacket(10, new PackagePrinter());
             }
