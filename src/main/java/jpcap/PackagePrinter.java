@@ -23,11 +23,11 @@ public class PackagePrinter implements PacketReceiver {
 //        }
         if(JpcapCaptor.interpretFTP){
             if (p instanceof TCPPacket) {
-                if (((TCPPacket) p).src_port == 20 || ((TCPPacket) p).dst_port == 21) {
+                if (((TCPPacket) p).src_port == 20 || ((TCPPacket) p).dst_port == 20 || ((TCPPacket) p).src_port == 21 || ((TCPPacket) p).dst_port == 21) {
                     FTPPacket p_ftp = new FTPPacket((TCPPacket) p,0);
                     System.out.println("\n" + p_ftp.toString() + "\n");
                 }
-            } else{
+            } else if(!JpcapCaptor.showOnlyFTP){
                 System.out.println("\n" + p.toString() + "\n");
             }
         } else{

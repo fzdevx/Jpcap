@@ -21,11 +21,17 @@ public class JpcapCaptor extends JpcapInstance {
     public int dropped_packets;
 
     /*
-    * if true, PacketPrinter class will treat and print FTP packets properly
-    *
+    * if true, PackagePrinter class will treat and print FTP packets properly
+    * otherwise FTP packets will be showed as TCP packets
     * added in 2019/11/28
      */
     public static boolean interpretFTP;
+
+    /*
+     * if true, PackagePrinter class will show only FTP packets
+     * added in 2019/11/28
+     */
+    public static boolean showOnlyFTP;
 
     private native String nativeOpenLive(String device, int snaplen,
                                          int promisc, int to_ms);
@@ -63,7 +69,7 @@ public class JpcapCaptor extends JpcapInstance {
      * @throws java.io.IOException Raised when the specified interface cannot be opened
      */
     public static JpcapCaptor openDevice(NetworkInterface intrface,
-                                         int snaplen, boolean promisc, int to_ms, boolean interpretFTP) throws java.io.IOException {
+                                         int snaplen, boolean promisc, int to_ms, boolean interpretFTP, boolean showOnlyFTP) throws java.io.IOException {
         JpcapCaptor jpcap = new JpcapCaptor();
         String ret = jpcap.nativeOpenLive(intrface.name, snaplen, (promisc ? 1
                 : 0), to_ms);
@@ -73,6 +79,7 @@ public class JpcapCaptor extends JpcapInstance {
 
         //added in 2019/11/28
         jpcap.interpretFTP = interpretFTP;
+        jpcap.showOnlyFTP = showOnlyFTP;
 
         return jpcap;
     }
