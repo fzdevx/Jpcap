@@ -10,6 +10,11 @@ public class PackagePrinter implements PacketReceiver {
     public void receivePacket(Packet p) {
         if(Params.interpretFTP){
             if (p instanceof TCPPacket) {
+
+                if (HttpPacket.isHttp(p.data)) {
+                    HttpPacket packet = new HttpPacket((TCPPacket) p);
+                    System.out.println(packet.toString());
+                }
                 if (((TCPPacket) p).src_port == 20 || ((TCPPacket) p).dst_port == 20 || ((TCPPacket) p).src_port == 21 || ((TCPPacket) p).dst_port == 21) {
                     if(p.data.length > 0) {
                         FTPPacket p_ftp = new FTPPacket((TCPPacket) p);

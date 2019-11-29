@@ -28,36 +28,28 @@ public class HttpFieldsHelper {
     public static final String proxyAuthorization = "Proxy-Authorization";
 
     public final String field(String var) {
+//        System.out.println("var " + var);
         Field[] declaredFields = this.getClass().getDeclaredFields();
         List<Field> fields = Arrays.asList(declaredFields);
 
-
-
-        String variable = fields.stream().map(field -> field)
+        String variable = fields.stream()
                 .filter(field -> {
                     try {
-                        return field.get(this)
-                                .equals(var);
+                        String value = (String) field.get(this);
+                        return value.equals(var);
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
                     }
                     return false;
                 })
-                .map(this::apply
-                )
+                .map(field -> field.getName())
                 .findFirst()
                 .orElse(null);
-        System.out.println("string variable " + variable);
+
+//        System.out.println("variable" + variable);
 
         return variable;
     }
 
 
-    private String apply(Field field) {
-        try {
-            return (String) field.get(this);
-        } catch (IllegalAccessException e) {
-        }
-        return null;
-    }
+
 }
