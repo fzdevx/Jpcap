@@ -1,6 +1,5 @@
 package jpcap;
 
-import jpcap.api.Capture;
 import jpcap.packet.*;
 import jpcap.util.TcpConnection;
 import jpcap.util.TcpProtocolRegister;
@@ -21,7 +20,11 @@ public class PackagePrinter implements PacketReceiver {
                         TcpProtocolRegister tcpProtocolRegister = new TcpProtocolRegister();
                         tcpProtocolRegister.register(tcpConnection, TcpProtocolRegister.Protocol.FTP);
 
-                        System.out.println(p_ftp.toString() + "\n");
+                        System.out.println(tcpConnection.toString());
+
+                        //System.out.println(p_ftp.toString() + "\n");
+
+
                     } else
                         System.out.println((p.toString() + "\n"));
                 } else if(!Params.showOnlyFTP){
@@ -34,4 +37,5 @@ public class PackagePrinter implements PacketReceiver {
             System.out.println(p.toString() + "\n");
         }
     }
+
 }

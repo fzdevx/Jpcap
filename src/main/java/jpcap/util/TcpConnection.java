@@ -9,6 +9,7 @@ public class TcpConnection {
     private int clientPort;
     private int serverPort;
     private boolean isReverseConnection = false;
+    private boolean isPassiveMode = false;
 
     public TcpConnection(InetAddress clientIp, InetAddress serverIp, int clientPort, int serverPort) {
         if (clientPort < serverPort) {
@@ -16,12 +17,21 @@ public class TcpConnection {
             this.serverIP = serverIp;
             this.clientPort = clientPort;
             this.serverPort = serverPort;
+
+            if(this.serverPort > 1023){
+                this.isPassiveMode = true;
+            }
+
         } else {
             this.serverIP = clientIp;
             this.clientIP = serverIp;
             this.serverPort = clientPort;
             this.clientPort = serverPort;
-            isReverseConnection = true;
+            this.isReverseConnection = true;
+
+            if(this.clientPort > 1023){
+                this.isPassiveMode = false;
+            }
         }
     }
 
@@ -80,7 +90,13 @@ public class TcpConnection {
 
     @Override
     public String toString() {
-        return String.format("%s:%d -> %s:%d", getClientIp().getHostAddress(), getClientPort(), getServerIp()
-                .getHostAddress(), getServerPort());
+        return "TcpConnection{ " +clientIP +
+                ":" + clientPort +
+                " -> " + serverIP +
+                ":" + serverPort +
+                "isReverseConnection=" + isReverseConnection +
+                " isPassiveMode=" + isPassiveMode +
+                '}';
     }
+
 }
