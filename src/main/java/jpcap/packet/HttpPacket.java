@@ -2,7 +2,9 @@ package jpcap.packet;
 
 import jpcap.util.HttpFieldsHelper;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,7 @@ public class HttpPacket extends TCPPacket {
         this.rsv2 = p.rsv2;
         this.window = p.window;
         this.datalink = p.datalink;
+        System.out.println("AAAA " + data);
         configureHTTPHeader();
     }
 
@@ -67,7 +70,7 @@ public class HttpPacket extends TCPPacket {
                 String[] linesParts = line.split(":");
                 if(linesParts.length > 0) {
                     String field = linesParts[0];
-                    List<String> partsList = Arrays.asList(linesParts);
+                   List<String> partsList = new ArrayList<String>(Arrays.asList(linesParts));
                     partsList.remove(0);
                     String content = String.join("", partsList);
                     fieldContent.put(field, content);
@@ -121,7 +124,17 @@ public class HttpPacket extends TCPPacket {
         return false;
     }
 
-    private String byteArrayToString(byte[] data) {
+    public static boolean isHttp(byte[] data) {
+        String firstLine = byteArrayToString(data);
+        String[] parts = firstLine.split("\r\n");
+
+        for (String code : parts) {
+            if(code.contains("HTTP")) return true;
+        }
+        return false;
+    }
+
+    private static String byteArrayToString(byte[] data) {
         String strData = new String(data);
         return strData;
     }
