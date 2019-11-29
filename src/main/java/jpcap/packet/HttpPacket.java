@@ -151,28 +151,27 @@ public class HttpPacket extends TCPPacket {
 
     @Override
     public String toString() {
-        return "HttpPacket{" +
-                ", head='" + firstLine + '\'' +
-                ", userAgent='" + userAgent + '\'' +
-                ", host='" + host + '\'' +
-                ", accept='" + accept + '\'' +
-                ", acceptLanguage='" + acceptLanguage + '\'' +
-                ", acceptEncoding='" + acceptEncoding + '\'' +
-                ", contentLength='" + contentLength + '\'' +
-                ", connection='" + connection + '\'' +
-                ", contentType='" + contentType + '\'' +
-                ", date='" + date + '\'' +
-                ", from='" + from + '\'' +
-                ", lastModified='" + lastModified + '\'' +
-                ", server='" + server + '\'' +
-                ", acceptRanges='" + acceptRanges + '\'' +
-                ", cacheControl='" + cacheControl + '\'' +
-                ", warning='" + warning + '\'' +
-                ", referer='" + referer + '\'' +
-                ", cookie='" + cookie + '\'' +
-                ", authorization='" + authorization + '\'' +
-                ", proxyAuthorization='" + proxyAuthorization + '\'' +
-                ", response=" + response +
-                '}';
+        String str = "HttpPacket " +(response?"Response ":"Request");
+        str += " head=" + firstLine + " ";
+        str += (!userAgent.isEmpty()?(" userAgent= "  + userAgent):"");
+        str += (!host.isEmpty()?(" host= "  + host):"");
+        str += (!accept.isEmpty()?(" accept= "  + accept):"");
+        str += (!acceptLanguage.isEmpty()?(" acceptLanguage= "  + acceptLanguage):"");
+        str += (!acceptEncoding.isEmpty()?(" acceptEncoding= "  + acceptEncoding):"");
+        str += (!contentLength.isEmpty()?(" contentLength= "  + contentLength):"");
+        str += (!connection.isEmpty()?(" connection= "  + connection):"");
+        str += (!contentType.isEmpty()?(" contentType= "  + contentType):"");
+        str += (!date.isEmpty()?(" date= "  + date):"");
+        str += (!from.isEmpty()?(" from= "  + from):"");
+        str += (!lastModified.isEmpty()?(" lastModified= "  + lastModified):"");
+        str += (!server.isEmpty()?(" server= "  + server):"");
+        str += (!acceptRanges.isEmpty()?(" acceptRanges= "  + acceptRanges):"");
+        str += (!cacheControl.isEmpty()?(" cacheControl= "  + cacheControl):"");
+        str += (!referer.isEmpty()?(" referer= "  + referer):"");
+        str += (!cookie.isEmpty()?(" cookie= "  + cookie):"");
+        str += (!authorization.isEmpty()?(" authorization= "  + authorization):"");
+        str += (!proxyAuthorization.isEmpty()?(" proxyAuthorization= "  + proxyAuthorization):"");
+        return str;
+
     }
 }
