@@ -3,6 +3,7 @@ package jpcap.api;
 import jpcap.JpcapCaptor;
 import jpcap.PackagePrinter;
 import jpcap.PacketReceiver;
+import jpcap.Params;
 import jpcap.packet.Packet;
 
 import java.io.IOException;
@@ -95,16 +96,16 @@ public class Capture implements AutoCloseable {
         jpcap.NetworkInterface[] devices = JpcapCaptor.getDeviceList();
 
         //Printa as interfaces
+        System.out.println("List of interfaces");
         for (int i = 0; i < devices.length ; i++) {
             System.out.println(devices[i].name  + " " + devices[i].description);
-
         }
 
         try {
             //usa a primeira interface para fazer a captura dos pacotes
             JpcapCaptor captor = JpcapCaptor.openDevice(devices[0], 65535, false, 1000);
-            JpcapCaptor.interpretFTP = true;
-            JpcapCaptor.showOnlyFTP = true;
+            Params.interpretFTP = true;
+            Params.showOnlyFTP = true;
             //captor.setFilter("ftp",false);
             while (true){
 //                captor.processPacket(10, new PackagePrinter());

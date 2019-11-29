@@ -31,19 +31,6 @@ public class JpcapCaptor extends JpcapInstance {
      */
     public int dropped_packets;
 
-    /*
-    * if true, PackagePrinter class will treat and print FTP packets properly
-    * otherwise FTP packets will be showed as TCP packets
-    * added in 2019/11/28
-     */
-    public static boolean interpretFTP;
-
-    /*
-     * if true, PackagePrinter class will show only FTP packets
-     * added in 2019/11/28
-     */
-    public static boolean showOnlyFTP;
-
     private native String nativeOpenLive(String device, int snaplen,
                                          int promisc, int to_ms);
 
