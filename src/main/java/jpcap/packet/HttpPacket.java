@@ -39,7 +39,7 @@ public class HttpPacket extends TCPPacket {
     private String proxyAuthorization;
 
     private boolean response= false;
-    private String content;
+    private static String content;
 
     public HttpPacket(TCPPacket p) {
         super(p.src_port, p.dst_port, p.sequence, p.ack_num, p.urg, p.ack, p.psh, p.rst, p.syn, p.fin, p.rsv1, p.rsv2, p.window, 0);
@@ -52,17 +52,17 @@ public class HttpPacket extends TCPPacket {
         this.window = p.window;
         this.datalink = p.datalink;
         System.out.println("AAAA " + data);
-        configureHTTPHeader();
+//        configureHTTPHeader();
     }
 
-    public void configureHTTPHeader() {
+    public static void configureHTTPHeader(String data) {
         HashMap<String,String> fieldContent = new HashMap<>();
 
-        String data = this.data;
+//        String data = this.data;
         String[] lines = data.split("\r\n");
         List<String> linesList = Arrays.asList(lines);
         if(lines.length > 0) {
-            this.response = isHttpResponse(lines[0]);
+//            this.response = isHttpResponse(lines[0]);
 
             for (String line : linesList) {
                 if(linesList.indexOf(line)==0) continue;
@@ -95,19 +95,21 @@ public class HttpPacket extends TCPPacket {
 
     }
 
-    private void configureHttpField(String key, String value) {
+    private static void configureHttpField(String key, String value) {
         HttpFieldsHelper helper = new HttpFieldsHelper();
         String field = helper.field(key);
 
         try {
-            Field declaredField = this.getClass().getDeclaredField(field);
-            declaredField.set(this,value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            Field declaredField = HttpPacket.class.getDeclaredField(field);
+            System.out.println("declarede field " + declaredField.getName());
+            System.out.println("value " + value);
+//            declaredField.set(this,value);
+        } catch (NoSuchFieldException ex) {
+            ex.printStackTrace();
         }
     }
 
-    public boolean isHttpResponse(String line) {
+    public static boolean isHttpResponse(String line) {
         String firstLine = line;
         String[] parts = firstLine.split(" ");
 
@@ -168,5 +170,19 @@ public class HttpPacket extends TCPPacket {
                 ", response=" + response +
                 ", content='" + content + '\'' +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        String data = "GET /connecttest.txt?n=1575044103651 HTTP/1.1\r\n" +
+                "Host: www.msftconnecttest.com\r\n" +
+                "Connection: keep-alive\r\n" +
+                "Accept: text/plain\r\n" +
+                "Cache-Control: no-cache, no-store, must-revalidate\r\n" +
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Skype/8.54.0.91 Chrome/73.0.3683.121 Electron/5.0.10 Safari/537.36\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "Accept-Encoding: gzip, deflate\r\n" +
+                "Accept-Language: pt-BR\r\n";
+
+        configureHTTPHeader(data);
     }
 }
