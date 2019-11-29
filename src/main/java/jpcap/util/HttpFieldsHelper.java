@@ -24,6 +24,8 @@ public class HttpFieldsHelper {
     public static final String referer  = "Referer";
     public static final String cookie  = "Cookie";
 
+    public static final String authorization  = "Authorization";
+    public static final String proxyAuthorization  = "Proxy-Authorization";
 
     public final String field(String var) {
         Field[] declaredFields = this.getClass().getDeclaredFields();

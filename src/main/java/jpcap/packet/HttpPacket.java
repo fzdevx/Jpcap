@@ -33,6 +33,9 @@ public class HttpPacket extends TCPPacket {
     private String referer;
     private String cookie;
 
+    private String authorization;
+    private String proxyAuthorization;
+
     private boolean response= false;
     private String content;
 
@@ -125,7 +128,7 @@ public class HttpPacket extends TCPPacket {
 
     @Override
     public String toString() {
-        return "HttpPacket " +(response?"Response ":"Request ")+  " {" +
+        return "HttpPacket{" +
                 "data='" + data + '\'' +
                 ", method='" + method + '\'' +
                 ", path='" + path + '\'' +
@@ -140,7 +143,17 @@ public class HttpPacket extends TCPPacket {
                 ", contentType='" + contentType + '\'' +
                 ", date='" + date + '\'' +
                 ", from='" + from + '\'' +
+                ", lastModified='" + lastModified + '\'' +
+                ", server='" + server + '\'' +
+                ", acceptRanges='" + acceptRanges + '\'' +
+                ", cacheControl='" + cacheControl + '\'' +
+                ", warning='" + warning + '\'' +
+                ", referer='" + referer + '\'' +
+                ", cookie='" + cookie + '\'' +
+                ", authorization='" + authorization + '\'' +
+                ", proxyAuthorization='" + proxyAuthorization + '\'' +
                 ", response=" + response +
+                ", content='" + content + '\'' +
                 '}';
     }
 }
