@@ -10,6 +10,7 @@ public class TcpConnection {
     private int serverPort;
     private boolean isReverseConnection = false;
     private boolean isPassiveMode = false;
+    private boolean isFtpConnection = true;
 
     public TcpConnection(InetAddress clientIp, InetAddress serverIp, int clientPort, int serverPort) {
         if (clientPort < serverPort) {
@@ -20,6 +21,8 @@ public class TcpConnection {
 
             if(this.serverPort > 1023){
                 this.isPassiveMode = true;
+            }else{
+                this.isPassiveMode = false;
             }
 
         } else {
@@ -31,6 +34,8 @@ public class TcpConnection {
 
             if(this.clientPort > 1023){
                 this.isPassiveMode = false;
+            }else{
+                this.isPassiveMode = true;
             }
         }
     }
@@ -90,13 +95,14 @@ public class TcpConnection {
 
     @Override
     public String toString() {
-        return "TcpConnection{ " +clientIP +
-                ":" + clientPort +
-                " -> " + serverIP +
-                ":" + serverPort +
-                "isReverseConnection=" + isReverseConnection +
-                " isPassiveMode=" + isPassiveMode +
-                '}';
+        return "TcpConnection{ " + getClientIp() +
+                ":" + getClientPort() +
+                " -> " + getServerIp() +
+                ":" + getServerPort() +
+                " isReverseConnection= " + isReverseConnection +
+                " isPassiveMode= " + isPassiveMode +
+                " isFtpConnection= " + isFtpConnection+
+                " }";
     }
 
 }
