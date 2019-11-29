@@ -1,11 +1,22 @@
 package jpcap;
 
+import jpcap.packet.FTPPacket;
 import jpcap.packet.Packet;
+import jpcap.packet.TCPPacket;
 
 /**
  * This class is used to capture packets or read packets from a captured file.
  */
 public class JpcapCaptor extends JpcapInstance {
+
+    /*
+    * start packet capture
+    * the code is implemented in PackagePrinter class
+    * added in 2019/11/28
+     */
+    public static void capturePacket(JpcapCaptor captor){
+        captor.processPacket(10, new PackagePrinter());
+    }
     /**
      * Number of received packets
      *
@@ -69,17 +80,13 @@ public class JpcapCaptor extends JpcapInstance {
      * @throws java.io.IOException Raised when the specified interface cannot be opened
      */
     public static JpcapCaptor openDevice(NetworkInterface intrface,
-                                         int snaplen, boolean promisc, int to_ms, boolean interpretFTP, boolean showOnlyFTP) throws java.io.IOException {
+                                         int snaplen, boolean promisc, int to_ms) throws java.io.IOException {
         JpcapCaptor jpcap = new JpcapCaptor();
         String ret = jpcap.nativeOpenLive(intrface.name, snaplen, (promisc ? 1
                 : 0), to_ms);
 
         if (ret != null) // error
             throw new java.io.IOException(ret);
-
-        //added in 2019/11/28
-        jpcap.interpretFTP = interpretFTP;
-        jpcap.showOnlyFTP = showOnlyFTP;
 
         return jpcap;
     }
